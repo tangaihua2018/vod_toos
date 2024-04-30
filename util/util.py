@@ -1,4 +1,6 @@
 import datetime
+import inspect
+import os
 import secrets
 import string
 
@@ -33,3 +35,11 @@ def generate_random_string(length):
     # 从字符集中随机选择字符，生成指定长度的字符串
     random_string = ''.join(secrets.choice(alphabet) for _ in range(length))
     return random_string
+
+
+def debug_log(info):
+    # 获取当前文件的文件名
+    current_file_name = os.path.basename(__file__)
+    # 获取当前行号
+    line_number = inspect.currentframe().f_back.f_lineno
+    debug_log(f'{get_curr_time()} {current_file_name}-{line_number}: {info}')

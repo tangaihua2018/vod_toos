@@ -36,13 +36,16 @@ def query_vods(page, page_size):
         # 计算跳过的记录数
         offset = (page - 1) * page_size
         # 执行查询，限制记录数和跳过的记录数
-        results = session.query(MacVod).offset(offset).limit(page_size).all()
+        results = session.query(MacVod).filter(MacVod.vod_play_from.like('%haiwaikan%')).offset(offset).limit(page_size)
         return results
 
 
 def process_data(record):
     with Session() as session:
         have, index, length = isolate_source(record.vod_play_from)
+        if not have:
+            debug_log(f'{record.vod_name}没有那啥海外看的')
+            return
         new_vod_play_url = parse_urls(record.vod_play_url, index, length, record.vod_name)
         session.query(MacVod).filter(MacVod.vod_id == record.vod_id).update({"vod_play_url": new_vod_play_url})
         session.commit()

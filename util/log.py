@@ -29,3 +29,5 @@ logger.addHandler(file_handler)
 # 记录一条日志
 # logger.debug("This is a debug message")
 # logger.info('zheshisha')
+
+log = logger

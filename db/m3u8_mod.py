@@ -15,4 +15,4 @@ def mod_one(vod_play_url, index, length, vod_name, cursor, connection, vod_id):
         connection.commit()
 
     except requests.RequestException as e:
-        print(f"Error fetching {vod_play_url}: {e}")
+        debug_log(f"Error fetching {vod_play_url}: {e}")
