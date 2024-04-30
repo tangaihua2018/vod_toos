@@ -42,4 +42,4 @@ def debug_log(info):
     current_file_name = os.path.basename(__file__)
     # 获取当前行号
     line_number = inspect.currentframe().f_back.f_lineno
-    debug_log(f'{get_curr_time()} {current_file_name}-{line_number}: {info}')
+    print(f'{get_curr_time()} {current_file_name}-{line_number}: {info}')

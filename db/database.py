@@ -3,7 +3,7 @@ from sqlalchemy.orm import declarative_base, Session, sessionmaker
 
 # 定义Base类
 from db.parseUrls import parse_urls
-from util.util import isolate_source
+from util.util import isolate_source, debug_log
 
 Base = declarative_base()
 

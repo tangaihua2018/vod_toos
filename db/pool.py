@@ -4,20 +4,21 @@ import concurrent.futures
 import m3u8
 import requests
 
+from util.http import http_get
 from util.log import log
+from util.util import debug_log
 
 
 def gen_new_m3u8_url(url_list, vod_name):
     # 使用线程池处理数据
-    with concurrent.futures.ProcessPoolExecutor(max_workers=20) as executor:
+    with concurrent.futures.ThreadPoolExecutor() as executor:
         # 提交任务到线程池
         futures = [executor.submit(download_and_modify_m3u8, i, url_list, vod_name) for i in range(len(url_list))]
-        # [download_and_modify_m3u8(i, url_list, vod_name) for i in range(len(url_list))]
 
         # 等待所有线程完成
         concurrent.futures.wait(futures)
 
-    return '#'.join([f'{episode}${url}' for episode, url in url_list])
+    return '#'.join([f'{url[0]}${url[1]}' for url in url_list])
 
 
 def mod_m3u8(url_list, vod_name):
@@ -47,10 +48,9 @@ def download_and_modify_m3u8(index, url_list, vod_name):
     url = url_list[index][1]
     # 发送请求获取M3U8内容
     try:
-        response = requests.get(url)
-        if response.status_code != 200:
-            debug_log(f'http error: status: {response.status_code}')
-        m3u8_obj = m3u8.loads(response.text)  # 从字符串加载M3U8数据
+        m3u8text = http_get(url)
+        debug_log(f'{vod_name}-{episode}通了')
+        m3u8_obj = m3u8.loads(m3u8text)  # 从字符串加载M3U8数据
     except Exception as e:
         debug_log(f'http error: {e}')
         return
@@ -71,7 +71,7 @@ def download_and_modify_m3u8(index, url_list, vod_name):
 
     safe_write_file(m3u8_filename, m3u8_obj.dumps())
 
-    url_list[index] = new_url
+    url_list[index][1] = new_url
 
 
 def safe_write_file(path, content):

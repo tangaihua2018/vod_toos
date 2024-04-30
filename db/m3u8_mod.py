@@ -1,6 +1,7 @@
 import requests
 
 from db.parseUrls import parse_urls
+from util.util import debug_log
 
 
 def mod_one(vod_play_url, index, length, vod_name, cursor, connection, vod_id):
