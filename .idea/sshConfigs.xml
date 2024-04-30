@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig host="51.79.254.79" id="fe8f8a58-6d41-4f0f-84df-5f1b07dccde2" keyPath="C:\Users\tangah\Documents\cert\ovh_root" port="22" nameFormat="DESCRIPTIVE" username="root" useOpenSSHConfig="true" />
+    </configs>
+  </component>
+</project>
