@@ -32,7 +32,8 @@ session.mount('https://', HTTPAdapter(max_retries=retries))
 
 
 def http_get(url):
-    response = session.get(url, timeout=10)
-    if response.status_code == 200:
-        return response.text
+    response = session.get(url, timeout=5)
+    if response.status_code != 200:
+        raise ValueError(f"status_code is {response.status_code}")
 
+    return response.text

@@ -46,6 +46,6 @@ def process_data(record):
         if not have:
             debug_log(f'{record.vod_name}没有那啥海外看的')
             return
-        new_vod_play_url = parse_urls(record.vod_play_url, index, length, record.vod_name)
+        new_vod_play_url = parse_urls(record.vod_play_url, index, record.vod_name)
         session.query(MacVod).filter(MacVod.vod_id == record.vod_id).update({"vod_play_url": new_vod_play_url})
         session.commit()
